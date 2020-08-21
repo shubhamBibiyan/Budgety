@@ -90,7 +90,7 @@ var UIControlller = (function() {
                 html = '<div class="item clearfix" id="income-%d%"> <div class="item__description">%descript%</div> <div class="right clearfix"> <div class="item__value">+%value%</div> <div class="item__delete"> <button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button> </div></div></div>'
             } else if(type === 'exp'){ 
                 element = DOMstrings.expensesContainer;
-                html = '<div class="item clearfix" id="expense-%d%"> <div class="item__description">%description%</div> <div class="right clearfix"> <div class="item__value">-%value%</div> <div class="item__percentage">21%</div> <div class="item__delete"> <button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button> </div> </div> </div>'
+                html = '<div class="item clearfix" id="expense-%d%"> <div class="item__description">%descript%</div> <div class="right clearfix"> <div class="item__value">-%value%</div> <div class="item__percentage">21%</div> <div class="item__delete"> <button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button> </div> </div> </div>'
             }
 
             // Replace the placeholder text with actual data
@@ -101,6 +101,20 @@ var UIControlller = (function() {
             // Insert HTML to DOM
             d1 = document.querySelector(element);
             d1.insertAdjacentHTML('beforeend', newHtml);
+
+        },
+
+        clearFields: function() {
+            var fields, fieldsArray;
+            fields = document.querySelectorAll(DOMstrings.input_description + ', ' +  DOMstrings.inputValue);
+
+            fieldsArray = Array.prototype.slice.call(fields);
+
+            fields.forEach(function(current, index, array) {
+                current.value = ""; 
+            });
+
+            fieldsArray[0].focus();
 
         },
 
@@ -135,6 +149,9 @@ var controller = (function(budgetCtrl, uiCtrl){
         
         // 3. Add the item to the UI 
         uiCtrl.addListItem(newItem, input.type);
+
+        // Clear the fields
+        uiCtrl.clearFields();
             
         // 4. Calculate the budget
             
